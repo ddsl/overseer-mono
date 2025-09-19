@@ -22,9 +22,11 @@ tasks.withType<Test> {
 }
 
 subprojects {
-
-    layout.buildDirectory = file("${rootProject.projectDir}/dist/apps/${project.name}")
-
+    if (project.projectDir.path.contains("${rootProject.projectDir}/libs")) {
+        layout.buildDirectory = file("${rootProject.projectDir}/dist/libs/${project.name}")
+    } else {
+        layout.buildDirectory = file("${rootProject.projectDir}/dist/apps/${project.name}")
+    }
     repositories {
         mavenCentral()
     }
