@@ -22,7 +22,8 @@ tasks.withType<Test> {
 }
 
 subprojects {
-    if (project.projectDir.path.contains("${rootProject.projectDir}/libs")) {
+    val libsPath = file("${rootProject.projectDir}/libs").toPath().normalize()
+    if (project.projectDir.toPath().normalize().startsWith(libsPath)) {
         layout.buildDirectory = file("${rootProject.projectDir}/dist/libs/${project.name}")
     } else {
         layout.buildDirectory = file("${rootProject.projectDir}/dist/apps/${project.name}")
