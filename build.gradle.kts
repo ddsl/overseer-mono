@@ -2,6 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.5.4" apply false
     id("io.spring.dependency-management") version "1.1.7" apply false
+    id("io.freefair.lombok") version "9.0.0" apply false
 }
 
 group = "io.github.ddsl.overseermono"
