@@ -8,10 +8,6 @@ plugins {
 group = "io.github.ddsl.overseermono"
 version = "1.0-SNAPSHOT"
 
-repositories {
-    mavenCentral()
-}
-
 dependencyManagement {
     imports {
         mavenBom("org.springframework.boot:spring-boot-dependencies:3.5.4")
