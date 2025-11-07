@@ -45,8 +45,8 @@ public class User {
     @Column(nullable = false)
     private Role role;
 
-    @Column(name ="is_blocked", columnDefinition = "BOOLEAN DEFAULT false")
-    private boolean isBlocked;
+    @Column(name ="blocked", columnDefinition = "BOOLEAN DEFAULT false")
+    private boolean blocked;
 
     @Column(name = "created_at", nullable = false)
     @CreatedDate()
