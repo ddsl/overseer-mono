@@ -30,11 +30,11 @@ public class User {
     @Column(updatable = false, nullable = false, columnDefinition = "UUID")
     private UUID uuid;
 
-    @Column(name = "first_name", nullable = false)
-    private String firstName;
+    @Column()
+    private String firstname;
 
-    @Column(name = "last_name", nullable = false)
-    private String lastName;
+    @Column()
+    private String lastname;
 
     @Column(nullable = false, unique = true)
     private String email;
