@@ -2,6 +2,7 @@ rootProject.name = "overseer-mono"
 
 pluginManagement{
     repositories {
+        maven("https://mvn-mirror.gitverse.ru")
         gradlePluginPortal()
     }
 }
@@ -9,6 +10,7 @@ pluginManagement{
 dependencyResolutionManagement{
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
+        maven("https://mvn-mirror.gitverse.ru")
         mavenCentral()
     }
 }
