@@ -1,9 +1,8 @@
 package io.github.ddsl.overseermono.commonlib.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.validation.constraints.NotNull;
+import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 import org.hibernate.proxy.HibernateProxy;
@@ -12,11 +11,15 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.util.*;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = {"password"})
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "users")
 @SQLDelete(sql = "UPDATE users SET deleted_at = CURRENT_TIMESTAMP WHERE uuid = ? AND deleted_at IS NULL")
@@ -42,9 +45,13 @@ public class User {
     @Column()
     private String password;
 
+    @ElementCollection
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Role role;
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_uuid"))
+    @Column(name = "role", nullable = false)
+    @NotNull(message = "Roles must not be empty.")
+    @Builder.Default
+    private Set<Role> roles = new HashSet<>(Collections.singletonList(Role.USER));
 
     @Column(name ="blocked", columnDefinition = "BOOLEAN DEFAULT false")
     private boolean blocked;
