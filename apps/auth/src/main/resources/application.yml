@@ -16,6 +16,15 @@ spring:
       show_sql: true
       format_sql: true
 
+jwt:
+  refresh-token:
+    cookie: "__Secure-Refresh-Token"
+    expires-in: 2592000
+  access-token:
+    cookie: "__Secure-Access-Token"
+    expires-in: 900
+  secret: ${JWT_SECRET}
+
 logging:
   level:
     org.springframework.security: DEBUG
