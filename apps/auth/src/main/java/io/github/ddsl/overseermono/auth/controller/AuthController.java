@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController()
 @RequestMapping("auth")
 public class AuthController {
-    private final AuthenticationManager authenticationManager;
     private final AuthService authService;
     private final JwtService jwtService;
 
@@ -24,13 +22,13 @@ public class AuthController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> signup(@RequestBody CreateUserDto newUserDto) {
         try {
-            var user = authService.createUser(newUserDto);
+            authService.createUser(newUserDto);
+            return ResponseEntity.ok("User created!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity
                     .unprocessableEntity()
                     .body(e.getMessage());
         }
-        return ResponseEntity.ok("User created!");
     }
 
     @PostMapping("signin")
