@@ -6,6 +6,7 @@ import io.github.ddsl.overseermono.auth.dto.mapper.UserMapper;
 import io.github.ddsl.overseermono.commonlib.entities.User;
 import io.github.ddsl.overseermono.commonlib.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 
 import java.util.Optional;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class AuthService {
@@ -25,7 +27,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public Optional<User> createUser(CreateUserDto userDto){
+    public User createUser(CreateUserDto userDto){
         if (userRepo.existsByLogin(userDto.login())) {
             throw new IllegalArgumentException("User with login '" + userDto.login() + "' already exists");
         }
@@ -35,7 +37,8 @@ public class AuthService {
         var user = userMapper.toUser(userDto);
         user.setPassword(passwordEncoder.encode(userDto.password()));
         userRepo.save(user);
-        return Optional.of(user);
+        log.info("User created with uuid {}", user.getUuid());
+        return user;
     }
 
     public Authentication Authenticate(LoginUserDto loginUserDto) {
